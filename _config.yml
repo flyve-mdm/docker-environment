@@ -1,5 +1,5 @@
 email: ml-flyvemdm@teclib.com
-baseurl: "/flyve-mdm-blackberry-inventory-agent"
+baseurl: "/flyve-mdm-docker"
 url: "http://flyve.org"
 
 # Build settings
@@ -10,7 +10,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-repository: flyve-mdm/flyve-mdm-blackberry-inventory-agent
+repository: flyve-mdm/flyve-mdm-docker
 
 prose:
 

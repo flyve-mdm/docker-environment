@@ -27,7 +27,7 @@ See [the tags section of our GitHub project](http://github.com/flyve-mdm/flyve-m
 ## Contribute
 
 Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our
-guidelines for [contributing](./CONTRIBUTING.md) and then check out one of our issues in the [Issues Dashboard](https://github.com/flyve-mdm/flyve-mdm-flyve-mdm-docker/issues).
+guidelines for contributing and then check out one of our issues in the [Issues Dashboard](https://github.com/flyve-mdm/flyve-mdm-flyve-mdm-docker/issues).
 
 ## Contact
 
