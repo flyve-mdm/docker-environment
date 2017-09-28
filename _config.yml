@@ -43,11 +43,13 @@ prose:
           value: false
       - name: "hackerNewsURL"
         field:
-          element: "text"
+          element: "text" 
+          label: Hacker News URL
           value: ""
       - name: "redditURL"
         field:
           element: "text"
+          label: Reddit URL
           value: ""
 
     _posts/static:
