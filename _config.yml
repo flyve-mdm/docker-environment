@@ -1,6 +1,9 @@
+title: docker
 email: ml-flyvemdm@teclib.com
+twitter: flyvemdm
 baseurl: "/flyve-mdm-docker"
-url: "http://flyve.org"
+url: "http://flyve.org"   
+image: http://flyve.org/flyve-mdm-docker/images/logo2.png
 
 # Build settings
 markdown: kramdown
