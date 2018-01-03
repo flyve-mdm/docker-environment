@@ -32,8 +32,14 @@
                                 <a class="color-type-secondary" href="{{ '/news' | absolute_url }}">News</a>
                             </li>
 
-                            <li>
-                                <a class="color-type-secondary" href="{{ '/docs' | absolute_url }}">Documentation</a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Development<i class="glyph glyph-chevron-down-2"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ 'development/' | absolute_url }}">Code documentation</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{ 'development/' | absolute_url }}">Coverage</a></li>
+                                    <li><a href="{{ 'development/' | absolute_url }}">Test Report</a></li>
+                                </ul>
                             </li>
     
                             <li>
