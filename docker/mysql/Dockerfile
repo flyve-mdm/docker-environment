@@ -1,0 +1,10 @@
+#ARGS
+ARG MYSQL_TAG=${MYSQL_TAG}
+
+FROM mysql:${MYSQL_TAG}
+
+# MySql database parameters
+ENV MYSQL_ROOT_PASSWORD docker
+ENV MYSQL_USER docker
+ENV MYSQL_PASSWORD docker
+ENV MYSQL_DATABASE glpidb

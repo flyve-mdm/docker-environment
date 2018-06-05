@@ -1,0 +1,99 @@
+version: '3'
+
+services:
+  # web server
+  glpi-nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+      args:
+        NGINX_TAG: ${NGINX_TAG}
+    container_name: Nginx
+    hostname: glpinginx
+    volumes:
+      # app folder
+      - ./www:/webapp:z
+      - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/vhost.conf
+    working_dir: /webapp
+    ports:
+      # http port
+      - 80:80
+    links:
+      - glpi-dbmysql
+      - glpi-php
+    networks:
+      red:
+        ipv4_address: 172.26.0.31
+  #PHP
+  glpi-php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+      args:
+        PHP_TAG: ${PHP_TAG}
+        GLPI_TAG: ${GLPI_TAG}
+        GLPI_SOURCE: ${GLPI_SOURCE}
+    container_name: Nginx-PHP7
+    hostname: glpiphp
+    volumes:
+      - ./www:/webapp:z
+      - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    links:
+      - glpi-dbmysql
+    networks:
+      red:
+        aliases:
+          - glpiphp
+        ipv4_address: 172.26.0.32
+        
+  # database
+  glpi-dbmysql:
+    build: 
+      context: ./docker/mysql
+      dockerfile: Dockerfile
+      args:
+        MYSQL_TAG: ${MYSQL_TAG}
+    container_name: Nginx-MYSQL
+    hostname: glpidb
+    volumes:
+      # hold the persisted data
+      - ./db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      red:
+        aliases:
+          - glpidb
+        ipv4_address: 172.26.0.33
+  glpi-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: Nginx-Phpmyadmin
+    hostname: glpiphpmyadmin
+    links:
+      - glpi-dbmysql
+    ports:
+        - 8081:80
+    environment:
+        PMA_USER: root
+        PMA_PASSWORD: docker
+        PMA_HOST: glpi-dbmysql
+    networks:
+      red:
+        aliases:
+          - glpiphpmyadmin
+        ipv4_address: 172.26.0.34
+      
+volumes:
+  db-data: {}
+
+# In this section we defined the network interface
+networks:
+  red:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.26.0.0/24
+# End of file

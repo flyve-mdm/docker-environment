@@ -1,0 +1,19 @@
+# Files IDE, Text Editors, Logs
+.idea
+www/.vscode
+.vscode
+www/build/
+www/*.log
+.DS_Store
+
+# Directory Database
+db_data/
+
+# Cache, session files and logs
+www/cache/*
+!www/cache/.gitkeep
+
+# Managed by Composer
+www/composer.lock
+www/vendor/*
+!www/vendor/.gitkeep
