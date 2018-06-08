@@ -3,19 +3,18 @@ ARG PHP_TAG=${PHP_TAG}
 
 FROM php:${PHP_TAG}
 
-ARG GLPI_TAG=${GLPI_TAG}
+ARG GLPI_BRANCH=${GLPI_BRANCH}
 ARG GLPI_SOURCE=${GLPI_SOURCE}
 # Environment variables
-ENV HOMEPATH /webapp\ 
-    GLPI_TAG ${GLPI_TAG} \
-    GLPI_SOURCE ${GLPI_SOURCE}
+ENV HOMEPATH /webapp
+ENV GLPI_BRANCH ${GLPI_BRANCH}
+ENV GLPI_SOURCE ${GLPI_SOURCE}
 
-RUN apt-get update && apt-get install -my wget gnupg
+RUN apt-get update --fix-missing && apt-get install -my wget gnupg
 
 # here is the installation NodeJS and Bower
 RUN curl -s https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs \
-    && npm set registry https://registry.npmjs.org/ \
     && npm install -g bower
 
 # Install iconv, mcryot, gd
@@ -30,15 +29,11 @@ RUN apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd
 
 # Install memcached
-RUN apt-get install -y libmemcached-dev nano \
+RUN apt-get install -y libmemcached-dev nano curl \
   && git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
   && cd /usr/src/php/ext/memcached && git checkout -b php7 origin/php7 \
   && docker-php-ext-configure memcached \
   && docker-php-ext-install memcached opcache mbstring
-
-# Install curl
-RUN apt-get install -y libcurl4-openssl-dev \
-    && docker-php-ext-install curl
 
 # Install zip json pdo_mysql mysqli ctype fileinfo zlib simplexml xml ldap imap xmlrpc {zlib simplexml xml ldap imap xmlrpc}
 RUN docker-php-ext-install zip json pdo_mysql mysqli ctype fileinfo
@@ -71,10 +66,11 @@ RUN chown -R www-data:www-data $HOMEPATH /var/www
 RUN usermod -u 1000 www-data
 # Giving a shell to www-data
 RUN chsh -s /bin/bash www-data \
-    git config --global https.postBuffer 524288000 \
-    git config --system http.sslverify false
+    && git config --global https.postBuffer 524288000 \
+    && git config --system http.sslverify false
 
 #Install/configure GLPI
 ADD ./cliinstall.sh /opt/
 RUN chmod +x /opt/cliinstall.sh
-RUN /opt/cliinstall.sh
+
+CMD [ "/opt/cliinstall.sh" ]
