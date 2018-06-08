@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 services:
   # web server
@@ -31,13 +31,14 @@ services:
       dockerfile: Dockerfile
       args:
         PHP_TAG: ${PHP_TAG}
-        GLPI_TAG: ${GLPI_TAG}
+        GLPI_BRANCH: ${GLPI_BRANCH}
         GLPI_SOURCE: ${GLPI_SOURCE}
     container_name: Nginx-PHP7
     hostname: glpiphp
     volumes:
       - ./www:/webapp:z
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ~/.ssh:/root/.ssh:z #Your Access ssh keys
     links:
       - glpi-dbmysql
     networks:
