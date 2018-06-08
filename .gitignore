@@ -13,6 +13,7 @@ db_data/
 www/cache/*
 !www/cache/.gitkeep
 
+www/
 # Managed by Composer
 www/composer.lock
 www/vendor/*
