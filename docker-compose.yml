@@ -2,18 +2,18 @@ version: '2'
 
 services:
   # web server
-  glpi-nginx:
+  glpi-apache:
     build:
-      context: ./docker/nginx
+      context: ./docker/apache
       dockerfile: Dockerfile
       args:
-        NGINX_TAG: ${NGINX_TAG}
-    container_name: Glpi-nginx
-    hostname: glpinginx
+        APACHE_TAG: ${APACHE_TAG}
+    container_name: Glpi-apache
+    hostname: glpiapache
     volumes:
       # app folder
       - ./www:/webapp:z
-      - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/vhost.conf
+      - ./docker/apache/vhost.conf:/usr/local/apache2/conf/vhost.conf
     working_dir: /webapp
     ports:
       # http port
