@@ -9,6 +9,7 @@ ARG GLPI_SOURCE=${GLPI_SOURCE}
 ENV HOMEPATH /webapp
 ENV GLPI_BRANCH ${GLPI_BRANCH}
 ENV GLPI_SOURCE ${GLPI_SOURCE}
+ENV CLONNING_METHOD ${CLONNING_METHOD}
 
 RUN apt-get update --fix-missing && apt-get install -my wget gnupg
 
@@ -63,14 +64,9 @@ RUN adduser www-data sudo
 # Add permission to the folder
 RUN chown -R www-data:www-data $HOMEPATH /var/www
 # Add permission to the volume
-RUN usermod -u 1000 www-data
+RUN usermod -u 1000 www-data && usermod -d $HOMEPATH www-data
 # Giving a shell to www-data
-RUN chsh -s /bin/bash www-data \
-    && git config --global https.postBuffer 524288000 \
-    && git config --system http.sslverify false
-
+RUN chsh -s /bin/bash www-data
 #Install/configure GLPI
 ADD ./cliinstall.sh /opt/
 RUN chmod +x /opt/cliinstall.sh
-
-CMD [ "/opt/cliinstall.sh" ]
