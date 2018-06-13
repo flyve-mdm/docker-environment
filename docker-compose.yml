@@ -13,7 +13,8 @@ services:
     volumes:
       # app folder
       - ./www:/webapp:z
-      - ./docker/apache/vhost.conf:/usr/local/apache2/conf/vhost.conf
+      - ./docker/apache/vhost.conf:/usr/local/apache2/conf/extra/vhost.conf
+      - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
     working_dir: /webapp
     ports:
       # http port
