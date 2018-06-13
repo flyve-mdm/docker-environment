@@ -20,6 +20,7 @@ RUN apt-get install -y nodejs \
 
 # Install iconv, mcryot, gd
 RUN apt-get install -y \
+        cron \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \

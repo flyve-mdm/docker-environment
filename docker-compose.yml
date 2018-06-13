@@ -13,8 +13,8 @@ services:
     volumes:
       # app folder
       - ./www:/webapp:z
-      - ./docker/apache/vhost.conf:/usr/local/apache2/conf/extra/vhost.conf
       - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./docker/apache/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
     working_dir: /webapp
     ports:
       # http port
@@ -49,10 +49,9 @@ services:
         aliases:
           - glpiphp
         ipv4_address: 172.26.0.32
-        
   # database
   glpi-dbmysql:
-    build: 
+    build:
       context: ./docker/mysql
       dockerfile: Dockerfile
       args:
@@ -86,7 +85,6 @@ services:
         aliases:
           - glpiphpmyadmin
         ipv4_address: 172.26.0.34
-      
 volumes:
   db-data: {}
 # In this section we defined the network interface

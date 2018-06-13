@@ -13,10 +13,10 @@ else
     git clone --progress --depth=1 $GLPI_SOURCE -b $GLPI_BRANCH $HOMEPATH
     # Add permission to the folder
     chown -R www-data:www-data $HOMEPATH /var/www
-    echo "Installing packages";
+    echo "Installing packages...";
     su - www-data -c 'composer install --no-dev --no-interaction'
-    #TODO: Pending for test unit
-    #if [ -e scripts/cliinstall.php ] ; then php scripts/cliinstall.php --db=glpitest --user=root --tests ; fi
-    #if [ -e tools/cliinstall.php ] ; then php tools/cliinstall.php --db=glpitest --user=root --tests ; fi
 fi
+#Configuring cron for GLPI
+echo "Configuring cron for GLPI..."
+echo "*/2 * * * * www-data /usr/local/bin/php $HOMEPATH/front/cron.php &>/dev/null" >> /etc/cron.d/glpi
 php-fpm -F
