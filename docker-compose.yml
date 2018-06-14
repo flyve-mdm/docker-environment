@@ -8,17 +8,19 @@ services:
       dockerfile: Dockerfile
       args:
         APACHE_TAG: ${APACHE_TAG}
+        HOST_SERVER_NAME: ${HOST_SERVER_NAME}
+        HOMEPATH: ${HOMEPATH}
     container_name: Glpi-apache
     hostname: glpiapache
     volumes:
       # app folder
-      - ./www:/webapp:z
+      - ./www:${HOMEPATH}:z
       - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
       - ./docker/apache/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
-    working_dir: /webapp
+    working_dir: ${HOMEPATH}
     ports:
       # http port
-      - 80:80
+      - ${HOST_SERVER_WEB_PORT}:80
     links:
       - glpi-dbmysql
       - glpi-php
@@ -35,11 +37,13 @@ services:
         GLPI_BRANCH: ${GLPI_BRANCH}
         GLPI_SOURCE: ${GLPI_SOURCE}
         CLONNING_METHOD: ${CLONNING_METHOD}
+        HOMEPATH: ${HOMEPATH}
+        DEFAULT_TIME_ZONE: ${DEFAULT_TIME_ZONE}
     container_name: Glpi-PHP
     hostname: glpiphp
     command: ["/opt/cliinstall.sh"]
     volumes:
-      - ./www:/webapp:z
+      - ./www:${HOMEPATH}:z
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
       - ~/.ssh:/root/.ssh:z #Your Access ssh keys
     links:
@@ -62,7 +66,7 @@ services:
       # hold the persisted data
       - ./db_data:/var/lib/mysql
     ports:
-      - 3306:3306
+      - ${HOST_SERVER_DB_PORT}:3306
     networks:
       red:
         aliases:
@@ -75,7 +79,7 @@ services:
     links:
       - glpi-dbmysql
     ports:
-        - 8081:80
+        - ${HOST_ADMIN_DB}:80
     environment:
         PMA_USER: root
         PMA_PASSWORD: docker
