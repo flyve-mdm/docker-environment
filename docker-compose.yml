@@ -55,6 +55,7 @@ services:
       - ~/.ssh:/root/.ssh:z #Your Access ssh keys
     links:
       - glpi-dbmysql
+      - glpi-mosquitto
     networks:
       red:
         aliases:
@@ -96,8 +97,31 @@ services:
         aliases:
           - glpiphpmyadmin
         ipv4_address: 172.26.0.34
+  # mosquitto
+  glpi-mosquitto:
+    build:
+      context: ./docker/mosquitto
+      dockerfile: Dockerfile
+      args:
+        MOSQUITTO_TAG: ${MOSQUITTO_TAG}
+    container_name: Glpi-Mosquitto
+    hostname: glpimosquitto
+    links:
+      - glpi-dbmysql
+    volumes:
+      # hold the persisted data
+      - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    ports:
+      - ${HOST_SERVER_MOSQUITTO_PORT}:1883
+      - ${HOST_SERVER_MOSQUITTO_PORT_TLS}:8883
+    networks:
+      red:
+        aliases:
+          - glpimqtt
+        ipv4_address: 172.26.0.35
 volumes:
   db-data: {}
+  mosquitto: {}
 # In this section we defined the network interface
 networks:
   red:
