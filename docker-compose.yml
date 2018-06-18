@@ -36,7 +36,6 @@ services:
         PHP_TAG: ${PHP_TAG}
         GLPI_BRANCH: ${GLPI_BRANCH}
         GLPI_SOURCE: ${GLPI_SOURCE}
-        GLPI_PLUGINS_DIRECTORY: ${GLPI_PLUGINS_DIRECTORY}
         CLONNING_METHOD: ${CLONNING_METHOD}
         HOMEPATH: ${HOMEPATH}
         DEFAULT_TIME_ZONE: ${DEFAULT_TIME_ZONE}
@@ -52,7 +51,7 @@ services:
     volumes:
       - ./www:${HOMEPATH}:z
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-      - ~/.ssh:/root/.ssh:z #Your Access ssh keys
+      - ${HOST_CONFIG_SSH_PATH}:/root/.ssh:z #Your Access ssh keys
     links:
       - glpi-dbmysql
       - glpi-mosquitto

@@ -6,8 +6,9 @@ www/build/
 www/*.log
 .DS_Store
 
-# Directory Database
+# Directory Database and Mosquitto
 db_data/
+mosquitto/
 
 # Cache, session files and logs
 www/cache/*

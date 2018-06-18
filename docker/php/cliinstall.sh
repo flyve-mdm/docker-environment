@@ -18,22 +18,21 @@ echo "Configuring cron for GLPI..."
 echo "*/2 * * * * www-data /usr/local/bin/php $HOMEPATH/front/cron.php &>/dev/null" >> /etc/cron.d/glpi
 # Instalation / Configuration Flyvemdm and Fusioninventory
 #
-if [ -d $HOMEPATH$GLPI_PLUGINS_DIRECTORY$FLYVEMDM_PATH ] && [ "$(ls -A $HOMEPATH$GLPI_PLUGINS_DIRECTORY$FLYVEMDM_PATH)" ]; then
+if [ -d $HOMEPATH/plugins$FLYVEMDM_PATH ] && [ "$(ls -A $HOMEPATH/plugins$FLYVEMDM_PATH)" ]; then
     echo "The directory's Flyvemdm exist"
     echo "If you want reinstall, remove the directory $FLYVEMDM_PATH and $FUSIONINVENTORY_PATH, and try again."
-    cd $HOMEPATH$GLPI_PLUGINS_DIRECTORY$FLYVEMDM_PATH
-    su - www-data -c 'composer install --no-dev'
 else
     echo "Cloning Fusioninventory from source:" $FUSIONINVENTORY_SOURCE;
     echo "Checkout in the Branch:" $FUSIONINVENTORY_BRANCH;
-    git clone --progress --depth=1 $FUSIONINVENTORY_SOURCE -b $FUSIONINVENTORY_BRANCH $HOMEPATH$GLPI_PLUGINS_DIRECTORY$FUSIONINVENTORY_PATH
+    git clone --progress --depth=1 $FUSIONINVENTORY_SOURCE -b $FUSIONINVENTORY_BRANCH $HOMEPATH/plugins$FUSIONINVENTORY_PATH
     echo "Cloning Flyvemdm from source:" $FLYVEMDM_SOURCE;
     echo "Checkout in the Branch:" $FLYVEMDM_BRANCH;
-    git clone --progress --depth=1 $FLYVEMDM_SOURCE -b $FLYVEMDM_BRANCH $HOMEPATH$GLPI_PLUGINS_DIRECTORY$FLYVEMDM_PATH
-    cd $HOMEPATH$GLPI_PLUGINS_DIRECTORY$FLYVEMDM_PATH
-    echo "Installing packages...";
-    su - www-data -c 'composer install --no-dev'
+    git clone --progress $FLYVEMDM_SOURCE -b $FLYVEMDM_BRANCH $HOMEPATH/plugins$FLYVEMDM_PATH
 fi
+cd $HOMEPATH/plugins$FLYVEMDM_PATH
+echo "Installing packages...";
+su - www-data -c 'composer install'
+
 # Add permission to the folder
 chown -R www-data:www-data $HOMEPATH /var/www
 php-fpm -F
