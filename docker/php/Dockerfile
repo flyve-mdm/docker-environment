@@ -2,6 +2,10 @@
 ARG PHP_TAG=${PHP_TAG}
 FROM php:${PHP_TAG}
 
+ARG GLPI_DB_NAME_TEST=${GLPI_DB_NAME_TEST}
+ARG MYSQL_DB_USER_ROOT=${MYSQL_DB_USER_ROOT}
+ARG MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+ARG MYSQL_PASSWORD=${MYSQL_PASSWORD}
 ARG HOMEPATH=${HOMEPATH}
 ARG GLPI_BRANCH=${GLPI_BRANCH}
 ARG GLPI_SOURCE=${GLPI_SOURCE}
@@ -12,6 +16,10 @@ ARG FUSIONINVENTORY_BRANCH=${FUSIONINVENTORY_BRANCH}
 ARG FUSIONINVENTORY_SOURCE=${FUSIONINVENTORY_SOURCE}
 ARG FUSIONINVENTORY_PATH=${FUSIONINVENTORY_PATH}
 # Environment variables
+ENV GLPI_DB_NAME_TEST ${GLPI_DB_NAME_TEST}
+ENV MYSQL_DB_USER_ROOT ${MYSQL_DB_USER_ROOT}
+ENV MYSQL_ROOT_PASSWORD ${MYSQL_ROOT_PASSWORD}
+ENV MYSQL_PASSWORD ${MYSQL_PASSWORD}
 ENV HOMEPATH ${HOMEPATH}
 ENV GLPI_BRANCH ${GLPI_BRANCH}
 ENV GLPI_SOURCE ${GLPI_SOURCE}
@@ -82,5 +90,9 @@ RUN usermod -u 1000 www-data && usermod -d $HOMEPATH www-data
 # Giving a shell to www-data
 RUN chsh -s /bin/bash www-data
 #Install/configure GLPI
-ADD ./cliinstall.sh /opt/
-RUN chmod +x /opt/cliinstall.sh
+RUN mkdir /opt/dev-tools
+ADD ./cliinstall.sh /opt/dev-tools/
+ADD ./testall.sh /opt/dev-tools/
+ADD ./testinstall.sh /opt/dev-tools/
+ADD ./testone.sh /opt/dev-tools/
+RUN chmod +x /opt/dev-tools/cliinstall.sh /opt/dev-tools/testall.sh /opt/dev-tools/testinstall.sh /opt/dev-tools/testone.sh
