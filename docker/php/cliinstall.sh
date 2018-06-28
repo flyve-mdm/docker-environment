@@ -32,6 +32,7 @@ fi
 cd $HOMEPATH/plugins$FLYVEMDM_PATH
 echo "Installing packages...";
 su - www-data -c 'composer install'
+su - www-data -c "$PHP $HOMEPATH/plugins$FLYVEMDM_PATH/tools/cli_install.php --enable-api --mqtt-internal-address $MOSQUITTO_BROKER_INTERNAL_ADDRESS --mqtt-port $HOST_SERVER_MOSQUITTO_PORT --mqtt-port-tls $HOST_SERVER_MOSQUITTO_PORT_TLS"
 
 # Add permission to the folder
 chown -R www-data:www-data $HOMEPATH /var/www

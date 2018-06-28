@@ -29,11 +29,14 @@ services:
         ipv4_address: 172.26.0.31
   #PHP
   glpi-php:
+    cap_add:
+    - NET_ADMIN
     build:
       context: ./docker/php
       dockerfile: Dockerfile
       args:
         PHP_TAG: ${PHP_TAG}
+        PHP: ${PHP}
         GLPI_DB_NAME_TEST: ${GLPI_DB_NAME_TEST}
         MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         MYSQL_DB_USER_ROOT: ${MYSQL_DB_USER_ROOT}
@@ -49,6 +52,10 @@ services:
         FUSIONINVENTORY_BRANCH: ${FUSIONINVENTORY_BRANCH}
         FUSIONINVENTORY_SOURCE: ${FUSIONINVENTORY_SOURCE}
         FUSIONINVENTORY_PATH: ${FUSIONINVENTORY_PATH}
+        MOSQUITTO_BROKER_ADDRESS: ${MOSQUITTO_BROKER_ADDRESS}
+        MOSQUITTO_BROKER_INTERNAL_ADDRESS: ${MOSQUITTO_BROKER_INTERNAL_ADDRESS}
+        HOST_SERVER_MOSQUITTO_PORT: ${HOST_SERVER_MOSQUITTO_PORT}
+        HOST_SERVER_MOSQUITTO_PORT_TLS: ${HOST_SERVER_MOSQUITTO_PORT_TLS}
     container_name: Glpi-PHP
     hostname: glpiphp
     command: ["/opt/dev-tools/cliinstall.sh"]
@@ -58,7 +65,6 @@ services:
       - ${HOST_CONFIG_SSH_PATH}:/root/.ssh:z #Your Access ssh keys
     links:
       - glpi-dbmysql
-      - glpi-mosquitto
     networks:
       red:
         aliases:
@@ -110,9 +116,6 @@ services:
       args:
         MOSQUITTO_TAG: ${MOSQUITTO_TAG}
     container_name: Glpi-Mosquitto
-    hostname: glpimosquitto
-    links:
-      - glpi-dbmysql
     volumes:
       # hold the persisted data
       - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf

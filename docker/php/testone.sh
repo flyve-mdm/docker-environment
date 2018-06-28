@@ -1,5 +1,4 @@
 #!/bin/sh
-PHP=php
 
 echo "=== Unit tests ==="
 if [ -f $1 ]; then
