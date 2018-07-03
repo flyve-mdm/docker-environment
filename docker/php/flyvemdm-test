@@ -1,0 +1,70 @@
+#!/bin/bash
+if [ "$1" != "" ] && [ "$1" != "-h" ]
+then
+    if [ "$1" == "-i" ]; then # Instalation process
+        mysql -h 172.26.0.1 --protocol=tcp -u $MYSQL_DB_USER_ROOT -p$MYSQL_ROOT_PASSWORD -e "DROP DATABASE IF EXISTS \`$GLPI_DB_NAME_TEST\`"
+        echo "=== Install tests ==="
+        if [ -f $HOMEPATH/scripts/cliinstall.php ]; then
+            $PHP $HOMEPATH/scripts/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+        else
+            $PHP $HOMEPATH/tools/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+        fi
+        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-install
+        if [ "$2" == "-eall" ]; then
+            echo "=== Unit tests ==="
+            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-unit
+            echo "=== Integration tests ==="
+            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-integration
+        elif [ "$2" == "-eone" ] && [ "$3" != "" ]; then # Execution process individual
+            echo "=== Unit tests / Integration test ==="
+            if [ -f $HOMEPATH/plugins$FLYVEMDM_PATH/$3 ]; then
+                RESOURCE_TYPE="-f"
+            elif [ -d $HOMEPATH/plugins$FLYVEMDM_PATH/$3 ]; then
+                RESOURCE_TYPE="-d"
+            fi
+            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc $RESOURCE_TYPE $HOMEPATH/plugins$FLYVEMDM_PATH/$3
+        fi
+        if [ "$4" == "-u" ]; then # Uninstalation process
+            echo "=== Uninstall tests ==="
+            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
+        fi
+    elif [ "$1" == "-u" ]; then # Uninstalation process
+        echo "=== Uninstall tests ==="
+        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
+    elif [ "$1" == "-eone" ] && [ "$2" != "" ]; then # Execution process individual
+        echo "=== Unit tests / Integration test ==="
+        if [ -f $HOMEPATH/plugins$FLYVEMDM_PATH/$2 ]; then
+            RESOURCE_TYPE="-f"
+        elif [ -d $HOMEPATH/plugins$FLYVEMDM_PATH/$2 ]; then
+            RESOURCE_TYPE="-d"
+        fi
+        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc $RESOURCE_TYPE $HOMEPATH/plugins$FLYVEMDM_PATH/$2
+        if [ "$3" != "" ] && [ "$3" == "-u" ]; then # Uninstalation process
+            echo "=== Uninstall tests ==="
+            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
+        fi
+    elif [ "$1" == "-eall" ]; then
+        echo "=== Unit tests ==="
+        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-unit
+        echo "=== Integration tests ==="
+        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-integration
+        if [ "$2" == "-u" ]; then # Uninstalation process
+            echo "=== Uninstall tests ==="
+            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
+        fi
+    fi
+else
+    echo '
+        Description: With this tool you can install the unit tests, execute all tests and execute an individual test
+
+        Usage: flyvemdm-test -i -eall -u
+               flyvemdm-test [options]
+        Options:
+            -i     Installing the tests.
+                -eall  Execute all tests (Unit tests, Integration tests). This params is after of "-i".
+                -eone  Execute one tests (Unit tests, Integration tests). This params is after of "-i".
+                    $ After the param "-eone" you have to indicate the test to execute.
+                    eg: flyvemdm-test -i -eone <source to test (File or directory)>
+            -u     Uninstall all tests. You can use this parameter in the start or in the end
+            -h     This help.'
+fi

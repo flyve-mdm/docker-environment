@@ -103,7 +103,5 @@ RUN chsh -s /bin/bash www-data
 #Install/configure GLPI
 RUN mkdir /opt/dev-tools
 ADD ./cliinstall.sh /opt/dev-tools/
-ADD ./testall.sh /opt/dev-tools/
-ADD ./testinstall.sh /opt/dev-tools/
-ADD ./testone.sh /opt/dev-tools/
-RUN chmod +x /opt/dev-tools/cliinstall.sh /opt/dev-tools/testall.sh /opt/dev-tools/testinstall.sh /opt/dev-tools/testone.sh
+ADD ./flyvemdm-test /usr/local/bin/
+RUN chmod +x /opt/dev-tools/cliinstall.sh /usr/local/bin/flyvemdm-test
