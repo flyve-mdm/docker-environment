@@ -7,7 +7,7 @@ ARG GLPI_DB_NAME_TEST=${GLPI_DB_NAME_TEST}
 ARG MYSQL_DB_USER_ROOT=${MYSQL_DB_USER_ROOT}
 ARG MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 ARG MYSQL_PASSWORD=${MYSQL_PASSWORD}
-ARG HOMEPATH=${HOMEPATH}
+ARG GLPIPATH=${GLPIPATH}
 ARG GLPI_BRANCH=${GLPI_BRANCH}
 ARG GLPI_SOURCE=${GLPI_SOURCE}
 ARG FLYVEMDM_BRANCH=${FLYVEMDM_BRANCH}
@@ -26,7 +26,7 @@ ENV GLPI_DB_NAME_TEST ${GLPI_DB_NAME_TEST}
 ENV MYSQL_DB_USER_ROOT ${MYSQL_DB_USER_ROOT}
 ENV MYSQL_ROOT_PASSWORD ${MYSQL_ROOT_PASSWORD}
 ENV MYSQL_PASSWORD ${MYSQL_PASSWORD}
-ENV HOMEPATH ${HOMEPATH}
+ENV GLPIPATH ${GLPIPATH}
 ENV GLPI_BRANCH ${GLPI_BRANCH}
 ENV GLPI_SOURCE ${GLPI_SOURCE}
 ENV CLONNING_METHOD ${CLONNING_METHOD}
@@ -91,13 +91,13 @@ RUN docker-php-ext-enable xdebug
 #Enable Mysqli extension
 RUN docker-php-ext-enable mysqli
 
-WORKDIR $HOMEPATH
+WORKDIR $GLPIPATH
 # Add www-data user to sudo group
 RUN adduser www-data sudo
 # Add permission to the folder
-RUN chown -R www-data:www-data $HOMEPATH /var/www
+RUN chown -R www-data:www-data $GLPIPATH /var/www
 # Add permission to the volume
-RUN usermod -u 1000 www-data && usermod -d $HOMEPATH www-data
+RUN usermod -u 1000 www-data && usermod -d $GLPIPATH www-data
 # Giving a shell to www-data
 RUN chsh -s /bin/bash www-data
 #Install/configure GLPI

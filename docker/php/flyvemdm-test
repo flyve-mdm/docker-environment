@@ -4,53 +4,53 @@ then
     if [ "$1" == "-i" ]; then # Instalation process
         mysql -h 172.26.0.1 --protocol=tcp -u $MYSQL_DB_USER_ROOT -p$MYSQL_ROOT_PASSWORD -e "DROP DATABASE IF EXISTS \`$GLPI_DB_NAME_TEST\`"
         echo "=== Install tests ==="
-        if [ -f $HOMEPATH/scripts/cliinstall.php ]; then
-            $PHP $HOMEPATH/scripts/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+        if [ -f $GLPIPATH/scripts/cliinstall.php ]; then
+            $PHP $GLPIPATH/scripts/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
         else
-            $PHP $HOMEPATH/tools/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+            $PHP $GLPIPATH/tools/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
         fi
-        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-install
+        $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-install
         if [ "$2" == "-eall" ]; then
             echo "=== Unit tests ==="
-            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-unit
+            $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-unit
             echo "=== Integration tests ==="
-            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-integration
+            $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-integration
         elif [ "$2" == "-eone" ] && [ "$3" != "" ]; then # Execution process individual
             echo "=== Unit tests / Integration test ==="
-            if [ -f $HOMEPATH/plugins$FLYVEMDM_PATH/$3 ]; then
+            if [ -f $GLPIPATH/plugins$FLYVEMDM_PATH/$3 ]; then
                 RESOURCE_TYPE="-f"
-            elif [ -d $HOMEPATH/plugins$FLYVEMDM_PATH/$3 ]; then
+            elif [ -d $GLPIPATH/plugins$FLYVEMDM_PATH/$3 ]; then
                 RESOURCE_TYPE="-d"
             fi
-            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc $RESOURCE_TYPE $HOMEPATH/plugins$FLYVEMDM_PATH/$3
+            $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc $RESOURCE_TYPE $GLPIPATH/plugins$FLYVEMDM_PATH/$3
         fi
         if [ "$4" == "-u" ]; then # Uninstalation process
             echo "=== Uninstall tests ==="
-            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
+            $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
         fi
     elif [ "$1" == "-u" ]; then # Uninstalation process
         echo "=== Uninstall tests ==="
-        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
+        $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
     elif [ "$1" == "-eone" ] && [ "$2" != "" ]; then # Execution process individual
         echo "=== Unit tests / Integration test ==="
-        if [ -f $HOMEPATH/plugins$FLYVEMDM_PATH/$2 ]; then
+        if [ -f $GLPIPATH/plugins$FLYVEMDM_PATH/$2 ]; then
             RESOURCE_TYPE="-f"
-        elif [ -d $HOMEPATH/plugins$FLYVEMDM_PATH/$2 ]; then
+        elif [ -d $GLPIPATH/plugins$FLYVEMDM_PATH/$2 ]; then
             RESOURCE_TYPE="-d"
         fi
-        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc $RESOURCE_TYPE $HOMEPATH/plugins$FLYVEMDM_PATH/$2
+        $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc $RESOURCE_TYPE $GLPIPATH/plugins$FLYVEMDM_PATH/$2
         if [ "$3" != "" ] && [ "$3" == "-u" ]; then # Uninstalation process
             echo "=== Uninstall tests ==="
-            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
+            $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
         fi
     elif [ "$1" == "-eall" ]; then
         echo "=== Unit tests ==="
-        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-unit
+        $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-unit
         echo "=== Integration tests ==="
-        $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-integration
+        $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-integration
         if [ "$2" == "-u" ]; then # Uninstalation process
             echo "=== Uninstall tests ==="
-            $PHP $HOMEPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $HOMEPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $HOMEPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
+            $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-uninstall
         fi
     fi
 else
