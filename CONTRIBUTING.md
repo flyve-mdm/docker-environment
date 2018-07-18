@@ -1,6 +1,6 @@
 [![flyve hero](https://github.com/flyve-mdm/glpi-plugin/raw/develop/images/header.png)](https://flyve-mdm.com/)
 
-# How to contribute to Flyve MDM Docker Image
+# How to contribute to Flyve MDM Docker Environment
 
 Welcome to our ever-growing community :octocat:!
 
@@ -59,11 +59,11 @@ We present you here the guidelines to start contributing in any of the Flyve MDM
 # <a name="1"></a> 1. See what's going on! [:top:](#top)
 
 ## <a name="1.1"></a> 1.1 Issue Dashboard
-If you want to know all the issues we're dealing with right now, take a look at our [Issue Dashboard](https://github.com/flyve-mdm/docker-image/issues) and look for areas in which you can help.
+If you want to know all the issues we're dealing with right now, take a look at our [Issue Dashboard](https://github.com/flyve-mdm/docker-environment/issues) and look for areas in which you can help.
 
 
 ## <a name="1.2"></a> 1.2 Pull Request Dashboard
-If you want to give us a hand solving issues then great, take a look at our [Pull Request Dashboard](https://github.com/flyve-mdm/docker-image/pulls) and check for an open or closed PR. We don’t want to duplicate efforts.
+If you want to give us a hand solving issues then great, take a look at our [Pull Request Dashboard](https://github.com/flyve-mdm/docker-environment/pulls) and check for an open or closed PR. We don’t want to duplicate efforts.
 
 # <a name="2"></a> 2. Assistance [:top:](#top)
 
@@ -82,16 +82,16 @@ Use our official [support channel](https://support.teclib.com/).
 # <a name="3"></a> 3. Feature Requests [:top:](#top)
 
 ## <a name="3.1"></a> 3.1 Requirement for a Feature Request
-If you like to _implement_ a new feature please [submit an Issue](https://github.com/flyve-mdm/docker-image/issues/new?template=Feature_request.md) with a proposal, so we can be sure it's relevant.
+If you like to _implement_ a new feature please [submit an Issue](https://github.com/flyve-mdm/docker-environment/issues/new?template=Feature_request.md) with a proposal, so we can be sure it's relevant.
 
 ### <a name="3.1.1"></a> 3.1.1 Major Feature Request
-For a major new feature request, [open an Issue](https://github.com/flyve-mdm/docker-image/issues/new?template=Feature_request.md) and outline your proposal so it can be discussed.
+For a major new feature request, [open an Issue](https://github.com/flyve-mdm/docker-environment/issues/new?template=Feature_request.md) and outline your proposal so it can be discussed.
 
 ### <a name="3.1.2"></a> 3.1.2 Minor Feature Request
-For a minor new feature request, you can craft it and directly [submit it as a Pull Request](https://github.com/flyve-mdm/docker-image/pulls), we'll take care of it.
+For a minor new feature request, you can craft it and directly [submit it as a Pull Request](https://github.com/flyve-mdm/docker-environment/pulls), we'll take care of it.
 
 ## <a name="3.2"></a> 3.2 Request a New Feature
-You can request a new feature by [submitting an Issue](https://github.com/flyve-mdm/docker-image/issues/new?template=Feature_request.md).
+You can request a new feature by [submitting an Issue](https://github.com/flyve-mdm/docker-environment/issues/new?template=Feature_request.md).
 
 # <a name="4"></a> 4. Submitting [:top:](#top)
 
@@ -102,10 +102,10 @@ A good Issue/Bug report shouldn't leave others needing to chase you up for more 
 A bug is a _demonstrable problem_ that is caused by the code in the repository. Good bug reports are extremely helpful, here are steps to follow to build a good one:
 
 ### <a name="4.1.1"></a> 4.1.1 Check for Past Issues or Bugs
-Before submitting the issue please check the [Issue Tracker](https://github.com/flyve-mdm/docker-image/issues/), maybe the issue/bug was already reported by another contributor. By doing this you help us maximize the effort spent on solving problems and the addition of new features.
+Before submitting the issue please check the [Issue Tracker](https://github.com/flyve-mdm/docker-environment/issues/), maybe the issue/bug was already reported by another contributor. By doing this you help us maximize the effort spent on solving problems and the addition of new features.
 
 ### <a name="4.1.2"></a> 4.1.2 Try to Reproduce It!
-Try to reproduce this issue/bug using the latest `develop` branch in the repository [Check it here](https://github.com/flyve-mdm/docker-image/branches).
+Try to reproduce this issue/bug using the latest `develop` branch in the repository [Check it here](https://github.com/flyve-mdm/docker-environment/branches).
 
 ### <a name="4.1.3"></a> 4.1.3 Isolate the Problem
 Ideally, create a reduced test case. We prefer bug reports with small, portable test cases.
@@ -118,7 +118,7 @@ We require the following information:
 * :boom: **Expected Results:** What did you expect to happen?
 
 ### <a name="4.1.5"></a> 4.1.5 Submit an Issue. :rocket:
-Having all data at hand, file the new issue by filling out our [Issue form](https://github.com/flyve-mdm/docker-image/issues/new?template=Bug_report.md).
+Having all data at hand, file the new issue by filling out our [Issue form](https://github.com/flyve-mdm/docker-environment/issues/new?template=Bug_report.md).
 
 **&mdash; That's it! :tada:**
 
@@ -269,7 +269,7 @@ Then you'll need to run the following to track your remote branch.
 
 Pull requests or PR are **proposed changes** to a repository submitted by a user and accepted or rejected by a repository's collaborators.
 
-After all the work being pushed to the newly created branch, In GitHub, send a pull request to our [repository.](https://github.com/flyve-mdm/docker-image/pulls)
+After all the work being pushed to the newly created branch, In GitHub, send a pull request to our [repository.](https://github.com/flyve-mdm/docker-environment/pulls)
 
 ### <a name="4.2.5.1"></a> 4.2.5.1 How to Write a Title for a Pull Request
 Pull Request should be named in reference to the main fix or feature you provide; minor information can be added to the description. Please be specific and don't use generic terms.
@@ -297,9 +297,9 @@ Pull Request should be named in reference to the main fix or feature you provide
 
 ### <a name="4.2.5.2"></a> 4.2.5.2 Before Send a Pull Request
 
-**1 - Pull Request Description:** Write a description about the changes, we provide a [template](https://github.com/flyve-mdm/docker-image/community) for Pull Request descriptions. When you're creating a Pull Request it'll be shown automatically. Just fill it out and you're done.
+**1 - Pull Request Description:** Write a description about the changes, we provide a [template](https://github.com/flyve-mdm/docker-environment/community) for Pull Request descriptions. When you're creating a Pull Request it'll be shown automatically. Just fill it out and you're done.
 
-**2 - Choose the right label**: Look at the [list of available labels.](https://github.com/flyve-mdm/docker-image/issues/labels)
+**2 - Choose the right label**: Look at the [list of available labels.](https://github.com/flyve-mdm/docker-environment/issues/labels)
 
 **3 - Smash that button!** Press that _Create Pull Request_ button and you're done.
 
