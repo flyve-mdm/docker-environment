@@ -1,8 +1,8 @@
 repository:
-  name: docker-image
-  description: Flyve MDM Docker Image
-  homepage: http://flyve.org/docker-image/
-  topics: flyve-mdm, docker, image
+  name: docker-environment
+  description: Flyve MDM Docker Environment
+  homepage: http://flyve.org/docker-environment/
+  topics: flyve-mdm, docker, environment
   private: false
   has_issues: true
   has_wiki: false
