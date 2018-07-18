@@ -1,9 +1,9 @@
 title: docker
 email: ml-flyvemdm@teclib.com
 twitter: flyvemdm
-baseurl: "/docker-image"
+baseurl: "/docker-environment"
 url: "http://flyve.org"   
-image: http://flyve.org/docker-image/images/logo2.png
+image: http://flyve.org/docker-environment/images/logo2.png
 
 # Build settings
 markdown: kramdown
@@ -13,7 +13,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-repository: flyve-mdm/docker-image
+repository: flyve-mdm/docker-environment
 
 prose:
 
