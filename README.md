@@ -18,6 +18,7 @@ To get started, check out [Flyve MDM Website](https://flyve-mdm.com/)!
 
 * [Synopsis](#synopsis)
 * [Build Status](#build-status)
+* [Compatibility Matrix](#compatibility-matrix)
 * [Documentation](#documentation)
 * [Versioning](#versioning)
 * [Contribute](#contribute)
@@ -34,6 +35,14 @@ Get your own instance of Flyve MDM plugin for GLPI by using Docker.
 | **LTS** | **Bleeding Edge** |
 |:---:|:---:|
 | [![Build Status](https://travis-ci.org/flyve-mdm/docker-environment.svg?branch=master)](https://travis-ci.org/flyve-mdm/docker-environment) | [![Build Status](https://travis-ci.org/flyve-mdm/docker-environment.svg?branch=develop)](https://travis-ci.org/flyve-mdm/docker-environment) |
+
+## Compatibility Matrix
+
+| **OS** | **Tested Version** | **Docker Environment** |
+|:---:|:---:|:---:|
+| MacOS | Sierra 10.12.6 | X |
+| Linux (Ubuntu) | 16.04 | X |
+| Windows | - | -|
 
 ## Documentation
 
