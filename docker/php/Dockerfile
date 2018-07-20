@@ -63,7 +63,7 @@ RUN apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd
 
 # Install memcached
-RUN apt-get install -y libmemcached-dev nano curl \
+RUN apt-get install -y libmemcached-dev nano curl dos2unix \
   && git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
   && cd /usr/src/php/ext/memcached && git checkout -b php7 origin/php7 \
   && docker-php-ext-configure memcached \
@@ -105,3 +105,4 @@ RUN mkdir /opt/dev-tools
 ADD ./cliinstall.sh /opt/dev-tools/
 ADD ./flyvemdm-test /usr/local/bin/
 RUN chmod +x /opt/dev-tools/cliinstall.sh /usr/local/bin/flyvemdm-test
+RUN dos2unix /opt/dev-tools/cliinstall.sh /usr/local/bin/flyvemdm-test

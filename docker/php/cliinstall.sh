@@ -29,9 +29,8 @@ else
     echo "Checkout in the Branch:" $FLYVEMDM_BRANCH;
     git clone --progress $FLYVEMDM_SOURCE -b $FLYVEMDM_BRANCH $GLPIPATH/plugins$FLYVEMDM_PATH
 fi
-cd $GLPIPATH/plugins$FLYVEMDM_PATH
 echo "Installing packages...";
-su - www-data -c 'composer install'
+su - www-data -c "cd $GLPIPATH/plugins$FLYVEMDM_PATH && composer install"
 su - www-data -c "$PHP $GLPIPATH/plugins$FLYVEMDM_PATH/tools/cli_install.php --enable-api --mqtt-internal-address $MOSQUITTO_BROKER_INTERNAL_ADDRESS --mqtt-port $HOST_SERVER_MOSQUITTO_PORT --mqtt-port-tls $HOST_SERVER_MOSQUITTO_PORT_TLS"
 
 # Add permission to the folder
