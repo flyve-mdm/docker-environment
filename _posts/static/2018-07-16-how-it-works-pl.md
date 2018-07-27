@@ -3,9 +3,9 @@ layout: post
 howtos: true
 published: true
 title: How it Works
-permalink: howtos/how-it-works-pl
+permalink: howtos/how-it-works
 description: Container's specifications
-category: plugin
+category: user
 ---
 
 ## Flyve MDM Docker Environment

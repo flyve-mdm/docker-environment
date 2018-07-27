@@ -3,10 +3,9 @@ layout: post
 howtos: true
 published: true
 title: Installation
-permalink: howtos/installation-pl
+permalink: howtos/installation
 description: Building and configuring the environment
-category: plugin
-date: 2018-07-17
+category: user
 ---
 
 ## Get the Docker Environment

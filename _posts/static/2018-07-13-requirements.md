@@ -4,8 +4,9 @@ howtos: true
 published: true
 title: Previous Requirements
 permalink: howtos/requirements
-description: For every Docker Environment
+description: For the Docker Environment
 category: user
+date: 2018-07-17
 ---
 
 ## Index

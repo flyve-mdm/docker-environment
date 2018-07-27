@@ -3,9 +3,9 @@ layout: post
 howtos: true
 published: true
 title: How to use
-permalink: howtos/how-to-use-pl
+permalink: howtos/how-to-use
 description: Useful commands
-category: plugin
+category: user
 ---
 
 ## Commands
