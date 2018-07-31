@@ -41,9 +41,9 @@ Where, the parameters are:
 
 #### 3. Configure your Fork source
 
-In the documentation to [contribute to Docker Environment](https://github.com/flyve-mdm/docker-environment/blob/develop/CONTRIBUTING.md), we recommend to create a fork from the Flyve MDM repository. After this, we need set the  *FLYVEMDMSOURCE* variable in the *.env* file, writing the source of this fork.
+In the documentation to [contribute to Flyve MDM GLPI Plugin](https://github.com/flyve-mdm/glpi-plugin/blob/develop/CONTRIBUTING.md), we recommend to create a fork from the Flyve MDM repository. After this, we need to set the  *FLYVEMDMSOURCE* variable in the *.env* file, writing the source of this fork.
 
-```FLYVEMDM_SOURCE=git@github.com:<your_username>/glpi-plugin.git```
+    FLYVEMDM_SOURCE=git@github.com:<your_username>/glpi-plugin.git
 
 <img src="{{ '/images/picto-information.png' | absolute_url }}" alt="Good to know:" height="16px"/> We must remember that before this step, it must be ready the configuration of the SSH keys corresponding to your Github account.
 
@@ -53,10 +53,97 @@ Now execute the command to build the docker environment in the terminal:
 
 ```user@localhost:docker-image-feature-add-containers $ docker-compose up --build```
 
+This process download the images, build the containers, execute the configuration, create the network interface and start running all containers.
+
 #### 5. Open the browser
 
 Open the browser and enter the server_name added in the previous step.
 
-```http://www.dev.glpi.local```
+    http://www.dev.glpi.local
+
+#### 6. Configure GLPI
+
+If it's the first time you use GLPI, it will display the installation wizard screen.
+We must follow the installation steps and to configure the database host, we have to enter this information:
+
+```console
+
+    SQL server (MariaDB or MySQL): glpi-dbmysql
+                         SQL user: docker
+                     SQL Password: docker
+
+```
+
+![GLPI installation wizard](https://i.imgur.com/U7ATiwP.png)
+
+Where the parameters are:
+
+    SQL server (MariaDB or MySQL)             the host container MYSQL
+    SQL user                                  database user defined in the environment
+    SQL Password                              database password set in the *.env* file
+
+### If you are on Windows OS
+
+#### 1. Enter in docker directory
+
+After we get the project, we enter into the docker directory located in the root of the project.
+
+#### 2. Configure the hosts file
+
+Before continuing, we must  know the local ip_address of the host network. In the cmd console, we must enter the command **ipconfig** and copy the local ip_address.
+
+In this part, we have to modify the hosts file in our host machine. This file is in the route ```C:\Windows\System32\Drivers\etc\hosts```
+
+Then, we add the host in a new line like this example:
+
+```192.168.0.100 www.dev.glpi.local```
+
+Where, the parameters are:
+
+    [ip_address_web] [host_name]
+
+    ip_address_web             local ip address of the host machine
+    host_name                  server_name defined in the .env file.
+
+#### 3. Configure your Fork source
+
+In the documentation to [contribute to Flyve MDM GLPI Plugin](https://github.com/flyve-mdm/glpi-plugin/blob/develop/CONTRIBUTING.md), we recommend to create a fork from the Flyve MDM repository. After this, we need to set the  *FLYVEMDMSOURCE* variable in the *.env* file, writing the source of this fork.
+
+    FLYVEMDM_SOURCE=git@github.com:your_username/glpi-plugin.git
+
+<img src="{{ '/images/picto-information.png' | absolute_url }}" alt="Good to know:" height="16px"/> We must remember that before this step, it must be ready the configuration of the SSH keys corresponding to your Github account.
+
+#### 4. Build and start the containers
+
+Now execute the command to build the docker environment in the terminal:
+
+```user@localhost:docker-image-feature-add-containers $ docker-compose up --build```
 
 This process download the images, build the containers, execute the configuration, create the network interface and start running all containers.
+
+#### 5. Open the browser
+
+Open the browser and enter the server_name added in the previous step.
+
+    http://www.dev.glpi.local
+
+#### 6. Configure GLPI
+
+If it's the first time you use GLPI, it will display the installation wizard screen.
+We must follow the installation steps and to configure the database host, we have to enter this information:
+
+```glpi
+
+    SQL server (MariaDB or MySQL): glpi-dbmysql
+                         SQL user: docker
+                     SQL Password: docker
+
+```
+
+![GLPI installation wizard](https://i.imgur.com/U7ATiwP.png)
+
+Where the parameters are:
+
+    SQL server (MariaDB or MySQL)             the host container MYSQL
+    SQL user                                  database user defined in the environment
+    SQL Password                              database password set in the *.env* file

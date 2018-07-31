@@ -93,7 +93,7 @@ This container has the programming languages necessary to execute GLPI Project i
 This contianer is based in the [official image of PHP](https://hub.docker.com/_/php/).
 The default version in this environment is composed by **FastCGI Process Manager**
 
-#### 3. Glpi-MySQL
+#### 3. Glpi-MYSQL
 
 This container has the database engine necessary to execute GLPI Project.
 
@@ -114,7 +114,7 @@ This container has the database engine necessary to execute GLPI Project.
 
 This contianer is based in the [official image of MYSQL](https://hub.docker.com/_/mysql/).
 
-#### 4. Glpi-PHPMyAdmin
+#### 4. Glpi-Phpmyadmin
 
 This container has the web interface PHPMyAdmin necessary to see the Database MySQL of the project.
 
@@ -201,4 +201,4 @@ We must verify the services running in these ports:
 
 If your host machine has a service listening in some of these ports, you have to stop that service or change the port in the *.env* file that is in the docker root of the project, before the build process of the  docker environment.
 
-<img src="{{ '/images/picto-warning.png' | absolute_url }}" alt="Important!" height="16px"/> If the *.env* file is edited, PLEASE DO NOT PUSH OF THIS CHANGE in the repository.
+<img src="{{ '/images/picto-warning.png' | absolute_url }}" alt="Important!" height="16px"/> If the *.env* file is edited, PLEASE DO NOT PUSH THIS CHANGE in the repository.
