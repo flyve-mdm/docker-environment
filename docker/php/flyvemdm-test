@@ -3,11 +3,22 @@ if [ "$1" != "" ] && [ "$1" != "-h" ]
 then
     if [ "$1" == "-i" ]; then # Instalation process
         mysql -h 172.26.0.1 --protocol=tcp -u $MYSQL_DB_USER_ROOT -p$MYSQL_ROOT_PASSWORD -e "DROP DATABASE IF EXISTS \`$GLPI_DB_NAME_TEST\`"
+        mysql -h 172.26.0.1 --protocol=tcp -u $MYSQL_DB_USER_ROOT -p$MYSQL_ROOT_PASSWORD -e "DROP DATABASE IF EXISTS \`$GLPI_DB_NAME_UPGRADE_TEST\`"
         echo "=== Install tests ==="
-        if [ -f $GLPIPATH/scripts/cliinstall.php ]; then
-            $PHP $GLPIPATH/scripts/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+        if [ -f $HOMEPATH/scripts/cliinstall.php ]; then
+            $PHP $HOMEPATH/scripts/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+            $PHP $HOMEPATH/scripts/cliinstall.php --db=$GLPI_DB_NAME_UPGRADE_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+            $PHP $HOMEPATH/plugins/$FUSIONINVENTORY_PATH/scripts/cli_install.php --tests
+
+            mysql -h 172.26.0.1 --protocol=tcp -u $MYSQL_DB_USER_ROOT -p$MYSQL_ROOT_PASSWORD $GLPI_DB_NAME_UPGRADE_TEST < tests/plugin_flyvemdm_empty_2.0.0-rc.1.sql
+            mysql -h 172.26.0.1 --protocol=tcp -u $MYSQL_DB_USER_ROOT -p$MYSQL_ROOT_PASSWORD $GLPI_DB_NAME_UPGRADE_TEST < tests/plugin_flyvemdm_config_2.0.0-rc.1.sql
         else
-            $PHP $GLPIPATH/tools/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+            $PHP $HOMEPATH/tools/cliinstall.php --db=$GLPI_DB_NAME_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+            $PHP $HOMEPATH/tools/cliinstall.php --db=$GLPI_DB_NAME_UPGRADE_TEST --user=$MYSQL_DB_USER_ROOT --pass=$MYSQL_ROOT_PASSWORD --tests --force
+            $PHP $HOMEPATH/plugins/$FUSIONINVENTORY_PATH/scripts/cli_install.php --tests
+
+            mysql -h 172.26.0.1 --protocol=tcp -u $MYSQL_DB_USER_ROOT -p$MYSQL_ROOT_PASSWORD $GLPI_DB_NAME_UPGRADE_TEST < tests/plugin_flyvemdm_empty_2.0.0-rc.1.sql
+            mysql -h 172.26.0.1 --protocol=tcp -u $MYSQL_DB_USER_ROOT -p$MYSQL_ROOT_PASSWORD $GLPI_DB_NAME_UPGRADE_TEST < tests/plugin_flyvemdm_config_2.0.0-rc.1.sql
         fi
         $PHP $GLPIPATH/plugins$FLYVEMDM_PATH/vendor/bin/atoum --debug -bf $GLPIPATH/plugins$FLYVEMDM_PATH/tests/bootstrap.php -no-cc -d $GLPIPATH/plugins$FLYVEMDM_PATH/tests/suite-install
         if [ "$2" == "-eall" ]; then
