@@ -42,7 +42,7 @@ Get your own instance of Flyve MDM plugin for GLPI by using Docker.
 |:---:|:---:|:---:|
 | MacOS | Sierra 10.12.6 | X |
 | Linux (Ubuntu) | 16.04 | X |
-| Windows | - | -|
+| Windows | 7 Home Basic, 10 Professional| X |
 
 ## Documentation
 
