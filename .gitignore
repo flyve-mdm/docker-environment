@@ -1,21 +1,13 @@
 # Files IDE, Text Editors, Logs
 .idea
-www/.vscode
 .vscode
-www/build/
-www/*.log
 .DS_Store
 
 # Directory Database and Mosquitto
 db_data/
 mosquitto/
+!mosquitto/Dockerfile
+!mosquitto/mosquitto.conf
 
-# Cache, session files and logs
-www/cache/*
-!www/cache/.gitkeep
-
+# Build files
 www/
-# Managed by Composer
-www/composer.lock
-www/vendor/*
-!www/vendor/.gitkeep
