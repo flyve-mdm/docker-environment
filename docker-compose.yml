@@ -1,6 +1,46 @@
-version: '2'
+version: '3'
 
 services:
+  # database
+  glpi-dbmysql:
+    build:
+      context: ./docker/mysql
+      dockerfile: Dockerfile
+      args:
+        MYSQL_TAG: ${MYSQL_TAG}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    container_name: Glpi-MYSQL
+    hostname: glpidb
+    volumes:
+    # hold the persisted data
+    - ./db_data:/var/lib/mysql
+    ports:
+    - ${HOST_SERVER_DB_PORT}:3306
+    networks:
+      red:
+        aliases:
+        - glpidb
+        ipv4_address: 172.26.0.33
+  # mosquitto
+  glpi-mosquitto:
+    build:
+      context: ./docker/mosquitto
+      dockerfile: Dockerfile
+      args:
+        MOSQUITTO_TAG: ${MOSQUITTO_TAG}
+    container_name: Glpi-Mosquitto
+    volumes:
+    # hold the persisted data
+    - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    ports:
+    - ${HOST_SERVER_MOSQUITTO_PORT}:1883
+    - ${HOST_SERVER_MOSQUITTO_PORT_TLS}:8883
+    networks:
+      red:
+        aliases:
+        - glpimqtt
+        ipv4_address: 172.26.0.35
   # web server
   glpi-apache:
     build:
@@ -71,27 +111,6 @@ services:
         aliases:
           - glpiphp
         ipv4_address: 172.26.0.32
-  # database
-  glpi-dbmysql:
-    build:
-      context: ./docker/mysql
-      dockerfile: Dockerfile
-      args:
-        MYSQL_TAG: ${MYSQL_TAG}
-        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    container_name: Glpi-MYSQL
-    hostname: glpidb
-    volumes:
-      # hold the persisted data
-      - ./db_data:/var/lib/mysql
-    ports:
-      - ${HOST_SERVER_DB_PORT}:3306
-    networks:
-      red:
-        aliases:
-          - glpidb
-        ipv4_address: 172.26.0.33
   glpi-phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: Glpi-Phpmyadmin
@@ -109,25 +128,6 @@ services:
         aliases:
           - glpiphpmyadmin
         ipv4_address: 172.26.0.34
-  # mosquitto
-  glpi-mosquitto:
-    build:
-      context: ./docker/mosquitto
-      dockerfile: Dockerfile
-      args:
-        MOSQUITTO_TAG: ${MOSQUITTO_TAG}
-    container_name: Glpi-Mosquitto
-    volumes:
-      # hold the persisted data
-      - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
-    ports:
-      - ${HOST_SERVER_MOSQUITTO_PORT}:1883
-      - ${HOST_SERVER_MOSQUITTO_PORT_TLS}:8883
-    networks:
-      red:
-        aliases:
-          - glpimqtt
-        ipv4_address: 172.26.0.35
 volumes:
   db-data: {}
   mosquitto: {}
