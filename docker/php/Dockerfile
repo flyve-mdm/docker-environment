@@ -17,6 +17,8 @@ ARG FUSIONINVENTORY_SOURCE=${FUSIONINVENTORY_SOURCE}
 ARG FUSIONINVENTORY_PATH=${FUSIONINVENTORY_PATH}
 ARG HOST_SERVER_MOSQUITTO_PORT=${HOST_SERVER_MOSQUITTO_PORT}
 ARG HOST_SERVER_MOSQUITTO_PORT_TLS=${HOST_SERVER_MOSQUITTO_PORT_TLS}
+ARG HOST_SERVER_NAME=${HOST_SERVER_NAME}
+
 # Environment variables
 ENV GLPI_DB_NAME_TEST ${GLPI_DB_NAME_TEST}
 ENV GLPI_DB_NAME_UPGRADE_TEST ${GLPI_DB_NAME_UPGRADE_TEST}
@@ -35,26 +37,20 @@ ENV FUSIONINVENTORY_SOURCE ${FUSIONINVENTORY_SOURCE}
 ENV FUSIONINVENTORY_PATH ${FUSIONINVENTORY_PATH}
 ENV HOST_SERVER_MOSQUITTO_PORT ${HOST_SERVER_MOSQUITTO_PORT}
 ENV HOST_SERVER_MOSQUITTO_PORT_TLS ${HOST_SERVER_MOSQUITTO_PORT_TLS}
+ENV HOST_SERVER_NAME ${HOST_SERVER_NAME}
 
 RUN apt-get update --fix-missing && apt-get upgrade -y && apt-get install -my wget gnupg
 
 # here is the installation NodeJS and Bower
-RUN curl -s https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs \
-    && npm install -g bower
+#RUN curl -s https://deb.nodesource.com/setup_6.x | bash -
+#RUN apt-get install -y nodejs \
+#    && npm install -g bower
 
-# Install iconv, mcryot, gd
-RUN apt-get install -y \
-        cron \
-        telnet \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libmcrypt-dev \
-        git \
-        mysql-client \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
+# Install iconv, mcrypt, gd
+RUN apt-get install -y cron libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev \
+        git mysql-client libldb-dev libldap2-dev libbz2-dev unzip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd
+    && docker-php-ext-install -j$(nproc) gd iconv mcrypt
 
 # Install memcached
 RUN apt-get install -y libmemcached-dev nano curl dos2unix \
@@ -63,11 +59,8 @@ RUN apt-get install -y libmemcached-dev nano curl dos2unix \
   && docker-php-ext-configure memcached \
   && docker-php-ext-install memcached opcache mbstring
 
-# Install zip json pdo_mysql mysqli ctype fileinfo zlib simplexml xml ldap imap xmlrpc {zlib simplexml xml ldap imap xmlrpc}
-RUN docker-php-ext-install zip json pdo_mysql mysqli ctype fileinfo
-#Required for Flyve
-RUN docker-php-ext-install sockets
-RUN apt-get install -y libldb-dev libldap2-dev
+# Install php extensions
+RUN docker-php-ext-install zip json pdo_mysql mysqli ctype fileinfo sockets bz2
 RUN ln -fs /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/
 RUN docker-php-ext-configure ldap
 ## APCu
@@ -97,6 +90,6 @@ RUN chsh -s /bin/bash www-data
 #Install/configure GLPI
 RUN mkdir /opt/dev-tools
 ADD ./cliinstall.sh /opt/dev-tools/
-ADD ./flyvemdm-test /usr/local/bin/
-RUN chmod +x /opt/dev-tools/cliinstall.sh /usr/local/bin/flyvemdm-test
-RUN dos2unix /opt/dev-tools/cliinstall.sh /usr/local/bin/flyvemdm-test
+#ADD ./flyvemdm-test /usr/local/bin/
+RUN chmod +x /opt/dev-tools/cliinstall.sh
+RUN dos2unix /opt/dev-tools/cliinstall.sh

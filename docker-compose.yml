@@ -9,7 +9,6 @@ services:
       args:
         MYSQL_TAG: ${MYSQL_TAG}
         MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     container_name: Glpi-MYSQL
     hostname: glpidb
     volumes:
@@ -17,11 +16,6 @@ services:
     - ./db_data:/var/lib/mysql
     ports:
     - ${HOST_SERVER_DB_PORT}:3306
-    networks:
-      red:
-        aliases:
-        - glpidb
-        ipv4_address: 172.26.0.33
   # mosquitto
   glpi-mosquitto:
     build:
@@ -36,11 +30,6 @@ services:
     ports:
     - ${HOST_SERVER_MOSQUITTO_PORT}:1883
     - ${HOST_SERVER_MOSQUITTO_PORT_TLS}:8883
-    networks:
-      red:
-        aliases:
-        - glpimqtt
-        ipv4_address: 172.26.0.35
   # web server
   glpi-apache:
     build:
@@ -61,12 +50,6 @@ services:
     ports:
       # http port
       - ${HOST_SERVER_WEB_PORT}:80
-    links:
-      - glpi-dbmysql
-      - glpi-php
-    networks:
-      red:
-        ipv4_address: 172.26.0.31
   #PHP
   glpi-php:
     cap_add:
@@ -76,12 +59,10 @@ services:
       dockerfile: Dockerfile
       args:
         PHP_TAG: ${PHP_TAG}
-        PHP: ${PHP}
         GLPI_DB_NAME_TEST: ${GLPI_DB_NAME_TEST}
         GLPI_DB_NAME_UPGRADE_TEST: ${GLPI_DB_NAME_UPGRADE_TEST}
         MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        MYSQL_DB_USER_ROOT: ${MYSQL_DB_USER_ROOT}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        GLPI_DB_NAME: ${GLPI_DB_NAME}
         GLPI_BRANCH: ${GLPI_BRANCH}
         GLPI_SOURCE: ${GLPI_SOURCE}
         CLONNING_METHOD: ${CLONNING_METHOD}
@@ -93,52 +74,32 @@ services:
         FUSIONINVENTORY_BRANCH: ${FUSIONINVENTORY_BRANCH}
         FUSIONINVENTORY_SOURCE: ${FUSIONINVENTORY_SOURCE}
         FUSIONINVENTORY_PATH: ${FUSIONINVENTORY_PATH}
-        MOSQUITTO_BROKER_ADDRESS: ${MOSQUITTO_BROKER_ADDRESS}
-        MOSQUITTO_BROKER_INTERNAL_ADDRESS: ${MOSQUITTO_BROKER_INTERNAL_ADDRESS}
         HOST_SERVER_MOSQUITTO_PORT: ${HOST_SERVER_MOSQUITTO_PORT}
         HOST_SERVER_MOSQUITTO_PORT_TLS: ${HOST_SERVER_MOSQUITTO_PORT_TLS}
+        HOST_SERVER_NAME: ${HOST_SERVER_NAME}
     container_name: Glpi-PHP
     hostname: glpiphp
+    links:
+      - glpi-dbmysql:dockerdb
+      - glpi-mosquitto:dockerMosquitto
     command: ["/opt/dev-tools/cliinstall.sh"]
     volumes:
       - ./www:${GLPIPATH}:z
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
       - ${HOST_CONFIG_SSH_PATH}:/root/.ssh:z #Your Access ssh keys
-    links:
-      - glpi-dbmysql
-    networks:
-      red:
-        aliases:
-          - glpiphp
-        ipv4_address: 172.26.0.32
   glpi-phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: Glpi-Phpmyadmin
     hostname: glpiphpmyadmin
     links:
-      - glpi-dbmysql
+      - glpi-dbmysql:dockerdb
     ports:
         - ${HOST_ADMIN_DB}:80
     environment:
         PMA_USER: root
         PMA_PASSWORD: docker
         PMA_HOST: glpi-dbmysql
-    networks:
-      red:
-        aliases:
-          - glpiphpmyadmin
-        ipv4_address: 172.26.0.34
 volumes:
   db-data: {}
   mosquitto: {}
-# In this section we defined the network interface
-networks:
-  red:
-    driver: bridge
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.26.0.0/24
 # End of file
