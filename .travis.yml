@@ -1,0 +1,11 @@
+services:
+  - docker
+
+before_install:
+  - sudo service mysql stop
+
+install:
+  - docker-compose up --build -d
+
+script:
+  - docker ps | grep -q Glpi-PHP
