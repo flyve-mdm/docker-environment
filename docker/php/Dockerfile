@@ -90,6 +90,6 @@ RUN chsh -s /bin/bash www-data
 #Install/configure GLPI
 RUN mkdir /opt/dev-tools
 ADD ./cliinstall.sh /opt/dev-tools/
-#ADD ./flyvemdm-test /usr/local/bin/
-RUN chmod +x /opt/dev-tools/cliinstall.sh
-RUN dos2unix /opt/dev-tools/cliinstall.sh
+ADD ./flyvemdm-test /usr/local/bin/
+RUN chmod +x /opt/dev-tools/cliinstall.sh /usr/local/bin/flyvemdm-test
+RUN dos2unix /opt/dev-tools/cliinstall.sh /usr/local/bin/flyvemdm-test
