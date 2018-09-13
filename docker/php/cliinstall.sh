@@ -24,6 +24,13 @@ else
     #Configuring cron for GLPI
     echo "Configuring cron for GLPI..."
     echo "*/2 * * * * www-data /usr/local/bin/php $GLPIPATH/front/cron.php &>/dev/null" >> /etc/cron.d/glpi
+
+    # update GLPI config
+    echo "Updating GLPI config..."
+    mysql -h dockerdb -u root -p$MYSQL_ROOT_PASSWORD -e "UPDATE glpi_configs SET value='http://$HOST_SERVER_NAME/' WHERE name='url_base'" $GLPI_DB_NAME
+    mysql -h dockerdb -u root -p$MYSQL_ROOT_PASSWORD -e "UPDATE glpi_configs SET value='http://$HOST_SERVER_NAME/apirest.php/' WHERE name='url_base_api'" $GLPI_DB_NAME
+    mysql -h dockerdb -u root -p$MYSQL_ROOT_PASSWORD -e "UPDATE glpi_configs SET value=1 WHERE name IN ('use_notifications', 'notifications_mailing', 'enable_api', 'enable_api_login_credentials')" $GLPI_DB_NAME
+    mysql -h dockerdb -u root -p$MYSQL_ROOT_PASSWORD -e "INSERT INTO glpi_apiclients (is_recursive, name, is_active, app_token) VALUES (1, 'full access from everywhere', 1, '')" $GLPI_DB_NAME
 fi
 
 cd $GLPIPATH
@@ -57,4 +64,5 @@ fi
 # Add permission to the folder
 chmod -R 777 $GLPIPATH/files
 chown -R www-data:www-data $GLPIPATH
+echo "FlyveMDM is ready to use"
 php-fpm -F
