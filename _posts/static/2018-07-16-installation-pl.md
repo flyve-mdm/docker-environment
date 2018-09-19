@@ -61,26 +61,14 @@ Open the browser and enter the server_name added in the previous step.
 
     http://www.dev.glpi.local
 
-#### 6. Configure GLPI
+#### 6. Enter GLPI
 
-If it's the first time you use GLPI, it will display the installation wizard screen.
-We must follow the installation steps and to configure the database host, we have to enter this information:
+You can login using the default credentials:
 
-```console
-
-    SQL server (MariaDB or MySQL): glpi-dbmysql
-                         SQL user: docker
-                     SQL Password: docker
-
-```
-
-![GLPI installation wizard](https://i.imgur.com/U7ATiwP.png)
-
-Where the parameters are:
-
-    SQL server (MariaDB or MySQL)             the host container MYSQL
-    SQL user                                  database user defined in the environment
-    SQL Password                              database password set in the *.env* file
+- glpi/glpi for administrator account
+- tech/tech for technician account
+- normal/normal for normal account
+- post-only/post-only for postonly account
 
 ### If you are on Windows OS
 

@@ -60,10 +60,6 @@ This container has the programming languages necessary to execute GLPI Project i
      <td>7.1.17</td>
    </tr>
    <tr>
-     <td><a href="https://nodejs.org/en/" alt="NodeJS">NodeJS</a></td>
-     <td>6</td>
-   </tr>
-   <tr>
      <td><a href="https://bower.io/" alt="Bower">Bower</a></td>
      <td>Latest</td>
    </tr>
