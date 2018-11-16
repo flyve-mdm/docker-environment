@@ -30,6 +30,15 @@ To get started, check out [Flyve MDM Website](https://flyve-mdm.com/)!
 
 Get your own instance of Flyve MDM plugin for GLPI by using Docker.
 
+**Important notes**
+
+* This docker project is for development uses and not for real production environments. 
+
+* When the docker is built the PHP-GLPI container gets the latest version of the development version of Flyve MDM plugin, 
+so it could be normal to get some bugs once in a while because it has different features and fixes from the official release. 
+
+* For security reasons, it also does not include a mail service container to deliver emails needed for GLPI
+
 ## Build Status
 
 | **LTS** | **Bleeding Edge** |
