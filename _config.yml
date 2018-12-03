@@ -1,12 +1,20 @@
-title: docker
-email: ml-flyvemdm@teclib.com
-twitter: flyvemdm
+title: docker environment
 baseurl: "/docker-environment"
-url: "http://flyve.org"   
+url: "http://flyve.org"
 image: http://flyve.org/docker-environment/images/logo2.png
+email: ml-flyvemdm@teclib.com
+twitter: https://twitter.com/flyvemdm
+facebook: https://www.facebook.com/FlyveMDM
+googlePlus: https://plus.google.com/collection/c32TsB
+telegram: https://t.me/flyvemdm
+irc: http://webchat.freenode.net/?channels=flyve-mdm
+reddit: https://www.reddit.com/r/FlyveMDM/
 
 # Build settings
 markdown: kramdown
+
+sass:
+  style: compressed
 
 plugins:
   - jekyll-github-metadata
