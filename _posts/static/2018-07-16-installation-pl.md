@@ -1,14 +1,11 @@
 ---
-layout: post
-howtos: true
+layout: howtos
 published: true
 title: Installation
 permalink: howtos/installation
 description: Building and configuring the environment
 category: user
 ---
-
-## Get the Docker Environment
 
 To start with the installation process, we must get the [Flyve MDM Docker Environment](https://github.com/flyve-mdm/docker-environment) from its source.
 

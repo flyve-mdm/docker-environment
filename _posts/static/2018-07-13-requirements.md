@@ -1,6 +1,5 @@
 ---
-layout: post
-howtos: true
+layout: howtos
 published: true
 title: Previous Requirements
 permalink: howtos/requirements
@@ -18,7 +17,7 @@ date: 2018-07-17
 
 It's necesary to have installed the following components with the recommended version:
 
-<table class="zebra-style">
+<table class="zebra-table">
    <tr>	   
      <th>Component</th>
      <th>Recommended Version</th>

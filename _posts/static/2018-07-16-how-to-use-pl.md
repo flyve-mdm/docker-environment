@@ -1,14 +1,11 @@
 ---
-layout: post
-howtos: true
+layout: howtos
 published: true
 title: How to use
 permalink: howtos/how-to-use
 description: Useful commands
 category: user
 ---
-
-## Commands
 
 In this article we show you how to use and execute commands in your environment.
 

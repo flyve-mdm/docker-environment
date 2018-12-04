@@ -1,14 +1,11 @@
 ---
-layout: post
-howtos: true
+layout: howtos
 published: true
 title: How it Works
 permalink: howtos/how-it-works
 description: Container's specifications
 category: user
 ---
-
-## Flyve MDM Docker Environment
 
 Docker is a tool that allows us to create an environment based in containers and work with several dependencies linked together.
 
@@ -20,7 +17,7 @@ This container has the web server necessary to execute GLPI Project.
 
 - Components:
 
-<table class="zebra-style">
+<table class="zebra-table">
   <tbody>
   <tr>	   
      <th>Component</th>
@@ -49,7 +46,7 @@ This container has the programming languages necessary to execute GLPI Project i
 
 - Components:
 
-<table class="zebra-style">
+<table class="zebra-table">
   <tbody>
   <tr>	   
      <th>Component</th>
@@ -95,7 +92,7 @@ This container has the database engine necessary to execute GLPI Project.
 
 - Components:
 
-<table class="zebra-style">
+<table class="zebra-table">
   <tbody>
   <tr>	   
      <th>Component</th>
@@ -116,7 +113,7 @@ This container has the web interface PHPMyAdmin necessary to see the Database My
 
 - Components:
 
-<table class="zebra-style">
+<table class="zebra-table">
   <tbody>
   <tr>	   
      <th>Component</th>
@@ -137,7 +134,7 @@ This container has the Mqtt server necessary to establish connectivity between t
 
 - Components:
 
-<table class="zebra-style">
+<table class="zebra-table">
   <tbody>
   <tr>	   
      <th>Component</th>
@@ -166,7 +163,7 @@ This environment has a network defined to link the service containers. This netw
 
 We must verify the services running in these ports:
 
-<table class="zebra-style">
+<table class="zebra-table">
   <tbody>
   <tr>	   
      <th>Port</th>
