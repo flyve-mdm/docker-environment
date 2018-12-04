@@ -5,3 +5,7 @@ files:
     - 'css/syntax.css'
     - 'css/highlight.scss' 
     - 'node_modules/**'
+rules:
+  class-name-format:
+    - 1
+    - convention: hyphenatedbem

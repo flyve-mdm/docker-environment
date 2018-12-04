@@ -1,4 +1,3 @@
-js/app.js
 js/bootstrap.min.js
 js/jquery.min.js
-js/jazzy.js
+_site/
