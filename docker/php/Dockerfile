@@ -48,7 +48,7 @@ RUN apt-get update --fix-missing && apt-get upgrade -y && apt-get install -my wg
 
 # Install iconv, mcrypt, gd
 RUN apt-get install -y cron libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev \
-        git mysql-client libldb-dev libldap2-dev libbz2-dev unzip \
+        git default-mysql-client libldb-dev libldap2-dev libbz2-dev unzip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd iconv mcrypt
 
